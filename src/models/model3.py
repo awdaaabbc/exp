@@ -1,17 +1,17 @@
 
 """
-Model3 敏感度分析模型
-基于动态卷积和Transformer的EEG分类模型，支持多专家频率分割
+Model3 模型
+基于动态卷积和 Transformer 的 EEG 分类模型
 
 主要组件:
 - DynamicTemporalConv: 动态时间卷积，使用多个专家进行特征提取
-- LiteDynamicMKCNN: 轻量级多核CNN，提取时空特征
+- LiteDynamicMKCNN: 轻量级多核 CNN，提取时空特征
 - DSCausalConv1d: 深度可分离因果卷积
 - LightTCN: 轻量级时间卷积网络
-- FrequencyAwareGQA: 频带感知分组查询注意力(带RoPE)
+- FrequencyAwareGQA: 频带感知分组查询注意力 (带 RoPE)
 - Model3: 主模型，整合所有组件
 
-敏感度分析支持:
+参数说明:
 - num_experts: 动态卷积专家数量
 - freq_split_ratios: 频率分割比例 (beta, theta) -> mu = 1 - beta - theta
 """

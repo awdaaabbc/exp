@@ -1,11 +1,11 @@
 """
 OpenBMI 数据集训练脚本
-使用Model3敏感度模型进行二分类运动想象任务训练
+使用 Model3 模型进行二分类运动想象任务训练
 
 数据来源:
 - Session 1: 训练数据
 - Session 2: 测试数据
-- 共54个受试者
+- 共 54 个受试者
 """
 import os
 import sys
@@ -17,7 +17,7 @@ import torch.nn as nn
 import argparse
 from torch.utils.data import DataLoader
 from src.data.eeg_dataset import EEGDataset as eegDataset
-from src.models.model3_sensitivity import Model3
+from src.models.model3 import Model3
 from src.training.trainer import baseModel
 from openbmi_paths import default_openbmi_root, resolve_openbmi_root, subject_files
 

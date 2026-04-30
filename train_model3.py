@@ -1,7 +1,7 @@
 
 """
-Model3 敏感度分析训练脚本 - BCI IV 2a 数据集
-支持多专家频率分割的敏感度实验
+Model3 训练脚本 - BCI IV 2a 数据集
+标准训练流程
 """
 
 import os
@@ -12,7 +12,7 @@ import numpy as np
 
 from src.data.bci_iv_2a_loader import load_bci_iv_2a_numpy
 from src.data.eeg_dataset import EEGDataset
-from src.models.model3_sensitivity import Model3
+from src.models.model3 import Model3
 from src.training.trainer import baseModel
 
 def dictToYaml(filePath, dictToWrite):
@@ -61,7 +61,7 @@ def run_experiment(exp_name, num_experts, freq_split_ratios, config):
     best_f1_list = []
     
     # 实验结果日志文件
-    log_file_path = os.path.join(out_folder, f"sensitivity_{exp_name}", "results.txt")
+    log_file_path = os.path.join(out_folder, exp_name, "results.txt")
     
     # 确保输出目录存在
     if not os.path.exists(os.path.dirname(log_file_path)):
@@ -78,12 +78,12 @@ def run_experiment(exp_name, num_experts, freq_split_ratios, config):
     for subId in subjects:
         print(f"Subject {subId}...")
         
-        # BCI 2a 数据文件命名格式: A01T, A01E 等
+        # BCI 2a 数据文件命名格式：A01T, A01E 等
         train_datafile = 'A0' + str(subId) + 'T'
         test_datafile = 'A0' + str(subId) + 'E'
         
-        # 输出路径: output/数据集/实验名/sub受试者ID/时间戳/
-        out_path = os.path.join(out_folder, f"sensitivity_{exp_name}", 'sub'+str(subId), random_folder)
+        # 输出路径：output/数据集/实验名/sub 受试者 ID/时间戳/
+        out_path = os.path.join(out_folder, exp_name, 'sub'+str(subId), random_folder)
         if not os.path.exists(out_path):
             os.makedirs(out_path)
             
@@ -150,11 +150,11 @@ def run_experiment(exp_name, num_experts, freq_split_ratios, config):
     return avg_acc, avg_kappa, avg_f1
 
 def main():
-    """主函数：加载配置并运行敏感度分析实验"""
+    """主函数：加载配置并运行实验"""
     # 加载基础配置
     base_config_path = os.environ.get(
         'CONFIG_PATH',
-        'configs/bci_iv_2a_model3_sensitivity.yaml',
+        'configs/bci_iv_2a_model3.yaml',
     )
     with open(base_config_path, 'r', encoding='utf-8') as f:
         config = yaml.full_load(f)
@@ -164,7 +164,7 @@ def main():
         config['data_path'] = os.environ['BCI_DATA_PATH']
 
     # 确保网络名称正确用于日志记录
-    config['network'] = 'Model3_Sensitivity'
+    config['network'] = 'Model3'
     
     # 允许通过环境变量覆盖训练轮数
     if os.environ.get('EPOCHS_OVERRIDE'):
@@ -187,14 +187,14 @@ def main():
     os.makedirs(config['out_folder'], exist_ok=True)
 
     # 全局汇总日志
-    global_log_path = os.path.join(config['out_folder'], "sensitivity_summary_freq.txt")
+    global_log_path = os.path.join(config['out_folder'], "summary.txt")
     with open(global_log_path, 'w') as f:
-        f.write("Sensitivity Analysis Summary (Frequency Awareness)\n")
+        f.write("Model3 Training Summary\n")
         f.write("="*80 + "\n")
         f.write(f"{'Experiment':<25} | {'Acc':<8} | {'Kappa':<8} | {'F1':<8}\n")
         f.write("-" * 80 + "\n")
     
-    print("Starting Sensitivity Analysis Experiments (Frequency Awareness)...")
+    print("Starting Model3 Training Experiments...")
     print("NOTE: This will run full training for multiple configurations.")
     
     # 运行所有实验
@@ -212,7 +212,7 @@ def main():
             f.write(f"{exp['name']:<25} | {acc:.4f}   | {kappa:.4f}   | {f1:.4f}\n")
         
     # 打印最终结果
-    print("\n\nFinal Sensitivity Analysis Results (Frequency Awareness):")
+    print("\n\nFinal Model3 Training Results:")
     print("="*60)
     print(f"{'Experiment':<25} | {'Acc':<8} | {'Kappa':<8} | {'F1':<8}")
     print("-" * 60)

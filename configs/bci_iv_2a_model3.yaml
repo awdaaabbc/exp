@@ -1,5 +1,5 @@
 # Model
-network: Model3_Sensitivity
+network: Model3
 network_args: 
   n_classes: 4
   n_channels: 22

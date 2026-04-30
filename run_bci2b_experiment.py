@@ -1,6 +1,6 @@
 """
 BCI IV 2b 数据集训练脚本
-使用Model3敏感度模型进行二分类运动想象任务训练
+使用 Model3 模型进行二分类运动想象任务训练
 """
 import os
 import sys
@@ -14,7 +14,7 @@ import argparse
 from torch.utils.data import DataLoader
 from src.data.bci_iv_2a_loader import load_bci_iv_2a_numpy as load_BCI42_data
 from src.data.eeg_dataset import EEGDataset
-from src.models.model3_sensitivity import Model3
+from src.models.model3 import Model3
 from src.training.trainer import baseModel
 from datetime import datetime
 
