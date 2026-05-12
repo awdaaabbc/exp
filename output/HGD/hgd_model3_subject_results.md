@@ -7,7 +7,7 @@
 | 设置项 | 数值 |
 |---|---:|
 | Epoch | 800 |
-| Batch size | 64 |
+| Batch size | 32 |
 | Learning rate | 0.0005 |
 
 ## 汇总结果
