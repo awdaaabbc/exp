@@ -11,7 +11,8 @@ output/
 ── HGD/                          # HGD 数据集实验结果
 ├── bci_iv_2a/                    # BCI IV-2a 数据集实验结果
 ├── bci_iv_2b/                    # BCI IV-2b 数据集实验结果
-└── confusion_matrices/           # 混淆矩阵可视化结果
+├── confusion_matrices/           # 混淆矩阵可视化结果
+└── tuning_temp/                  # 临时调参实验结果
 ```
 
 ---
@@ -118,8 +119,17 @@ HGD 数据集的混淆矩阵。
 #### openbmi/
 OpenBMI 数据集的混淆矩阵。
 - **模型**: Model3_Src（原始模型）
-- **受试者**: sub01 - sub10+
+- **受试者**: sub01 - sub54
 - **命名格式**: `openbmi_sub{XX}_Model3_Src.png` 和 `openbmi_sub{XX}_Model3_Src.txt`
+
+---
+
+### 5. tuning_temp/ - 临时调参实验
+
+临时参数调优实验的中间结果，包含 OpenBMI 数据集各受试者的多次调参尝试。
+- **结构**: `output/openbmi/sub{1-54}/{timestamp}/`
+- **内容**: `config.yaml`（配置文件）、`log_result_*.txt`（训练日志）、`model.pth`（模型权重）
+- **用途**: 用于超参数搜索和模型调优的中间产物，包含多个时间戳的实验记录
 
 ---
 
@@ -139,7 +149,7 @@ OpenBMI 数据集的混淆矩阵。
 - 训练时间和 ETA
 
 ### model.pth
-训练保存的模型权重文件（已排除在 git 之外）。
+训练保存的模型权重文件
 
 ### results.txt / summary.txt
 实验结果汇总文件，包含各受试者的平均性能指标。
@@ -157,8 +167,4 @@ OpenBMI 数据集的混淆矩阵。
 
 ---
 
-## 注意事项
 
-1. **模型权重文件**（`.pth`）由于体积较大，已添加到 `.gitignore` 中，未上传至 GitHub。
-2. 每个受试者的实验结果保存在独立的时间戳文件夹中，便于追溯实验历史。
-3. 消融实验文件夹命名规则：`Model3_{移除的组件}`，如 `Model3_withoutDynamic` 表示移除动态卷积模块。
